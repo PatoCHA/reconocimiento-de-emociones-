@@ -1,9 +1,14 @@
 import urllib2
 import urllib
 import time
+import pandas as pd
+from sqlalchemy import create_engine
+from pandas.io.json import json_normalize
+import json
+
 http_url = 'https://api-us.faceplusplus.com/facepp/v3/detect'
-key = "yWVme-oiYYTI_6qhb14MOmxQn2j5DGod"
-secret = "GNcZpSkJsB_04hpx84xQYrGQue0e667c"
+key = "your key"
+secret = "your secret"
 filepath = r"local-filename.jpg"
 boundary = '----------%s' % hex(int(time.time() * 1000))
 data = []
@@ -40,20 +45,17 @@ try:
 
 except urllib2.HTTPError as e:
     print e.read()
-import pandas as pd
-from sqlalchemy import create_engine
-from pandas.io.json import json_normalize
-import json
-engine = create_engine("mysql+mysqldb://root:"+'pjcm64930'+"@localhost/parrot_db")
+
+engine = create_engine("mysql+mysqldb://root:"+'password'+"@localhost/emotions_db")
 normalized=json_normalize(json_normalize(json.loads(qrcont)).faces[0])
 
 Porline=normalized['face_token'].values.tolist()
 
 for line in Porline:
     http_url = "https://api-us.faceplusplus.com/facepp/v3/face/analyze"
-    key = "yWVme-oiYYTI_6qhb14MOmxQn2j5DGod"
-    secret = "GNcZpSkJsB_04hpx84xQYrGQue0e667c"
-    filepath = r"1488276307959.jpg"
+    key = "tuclave"
+    secret = "tusecreto"
+    #filepath = r"1488276307959.jpg"
     boundary = '----------%s' % hex(int(time.time() * 1000))
     data1 = []
     data1.append('--%s' % boundary)
